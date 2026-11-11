@@ -55,5 +55,5 @@ USER 999:999
 # Place executables in the environment at the front of the path
 ENV PATH="/app/.venv/bin:$PATH"
 
-# when running the container, add --db-path and a bind mount to the host's db file
+# when running the container, add --db-path <db-file> and bind mount host db file
 ENTRYPOINT ["mcp-server-git"]
