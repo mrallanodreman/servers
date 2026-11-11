@@ -31,6 +31,11 @@ def normalize_allowed_host(entry: str) -> str:
     form, an IPv6 one with or without brackets. A wildcard is ``*.`` followed
     by a name.
     """
+    # reject IP-based wildcards: *.0.0.1 matches any IP ending .0.0.1
+    if wildcard and re.match(r"^\d+\.\d+\.\d+\.\d+$", name):
+        raise ValueError(
+            f"{entry!r} is not a valid host name: wildcard IP entries are not allowed (*.0.0.1 would match any IP ending .0.0.1)"
+        )
     value = entry.strip().rstrip(".").lower()
     wildcard = value.startswith("*.")
     name = value[2:] if wildcard else value
